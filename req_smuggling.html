@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- 
+
+      This simple page will calculate Content-Length and chunked Transfer-Encoding values for a given text. This is aiding HTTP Request smuggling. 
+      https://portswigger.net/web-security/request-smuggling
+
+-->
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+
+<form>
+  <p><label for="w3review">Data:</label></p>
+  <textarea placeholder="enter body here" name="inputbox" rows="4" cols="50" autofocus></textarea>
+  <br>
+  <input type="button" NAME="button" Value="Process" onClick="process(this.form)">
+</form>
+
+
+<h2>-----------------------</h2>
+
+<div class="row">
+  <div id=1 class="column" style="background-color:#aaaccc;">
+  </div>
+  <div id=2 class="column" style="background-color:#aaaaff;">
+  </div>
+</div>
+
+</body>
+<script>
+function process(form){
+  var data = form.inputbox.value;
+  var l = data.length;
+  document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + data + "<br><br>";
+  document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + data + "<br>0<br><br>";
+}
+</script>
+</html>
