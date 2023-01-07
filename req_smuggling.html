@@ -15,8 +15,9 @@
 /* Create two equal columns that floats next to each other */
 .column {
   float: left;
-  width: 50%;
+  width: 300px;
   padding: 10px;
+  word-wrap: break-word;
 }
 
 /* Clear floats after the columns */
@@ -24,6 +25,7 @@
   content: "";
   display: table;
   clear: both;
+  white-space: pre;
 }
 </style>
 </head>
@@ -48,11 +50,17 @@
 
 </body>
 <script>
+function clean(data){
+  data = data.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g,'<br>');
+  return data;
+}
+
 function process(form){
   var data = form.inputbox.value;
   var l = data.length;
-  document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + data + "<br><br>";
-  document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + data + "<br>0<br><br>";
+  document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + clean(data) + "<br><br>";
+  document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + clean(data) + "<br>0<br><br>";
 }
 </script>
 </html>
+
