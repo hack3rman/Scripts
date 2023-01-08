@@ -34,17 +34,23 @@
 <form>
   <p><label for="w3review">Data:</label></p>
   <textarea placeholder="enter body here" name="inputbox" rows="4" cols="50" autofocus></textarea>
-  <br>
+  <br><p>
   <input type="button" NAME="button" Value="Process" onClick="process(this.form)">
 </form>
 
+<br>
 
-<h2>-----------------------</h2>
 
 <div class="row">
   <div id=1 class="column" style="background-color:#aaaccc;">
+  Content-Length: 0
+  <br><br>
   </div>
   <div id=2 class="column" style="background-color:#aaaaff;">
+  Transfer-Encoding: chunked
+  <br><br>
+  0
+  <br><br>
   </div>
 </div>
 
@@ -58,9 +64,10 @@ function clean(data){
 function process(form){
   var data = form.inputbox.value;
   var l = data.length;
-  document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + clean(data) + "<br><br>";
-  document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + clean(data) + "<br>0<br><br>";
+  if (l>0) {
+    document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + clean(data) + "<br><br>";
+    document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + clean(data) + "<br>0<br><br>";
+    }
 }
 </script>
 </html>
-
