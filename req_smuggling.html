@@ -63,7 +63,7 @@ function clean(data){
 
 function process(form){
   var data = form.inputbox.value;
-  var l = data.length;
+  var l = data.replace(/\n/g,'\r\n').length;
   if (l>0) {
     document.getElementById(1).innerHTML = "Content-Length: " + l + "<br><br>" + clean(data) + "<br><br>";
     document.getElementById(2).innerHTML = "Transfer-Encoding: chunked<br><br>" + l.toString(16) + "<br>" + clean(data) + "<br>0<br><br>";
