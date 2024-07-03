@@ -4,8 +4,10 @@ function Get-VulnACL {
   $my_groups = (Get-ADPrincipalGroupMembership (Get-ADUser $env:username).distinguishedName).Name
   $my_groups | ForEach-Object {
     $my_group = $_; $all_groups | ForEach-Object {
-      if ( ((Get-Acl -Path "AD:$_").Access).IdentityReference -like "*$my_group") {
-        Write-Output "$_" 
+      $group = $_;(Get-Acl -Path "AD:$group").Access | ForEach-Object {
+        if ( $_.IdentityReference -like "*$my_group") {
+          Write-Output "$($_.ActiveDirectoryRights) : $group"
+        }
       }
     }
   }
